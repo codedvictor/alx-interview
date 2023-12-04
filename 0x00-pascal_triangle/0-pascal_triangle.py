@@ -22,5 +22,5 @@ def pascal_triangle(n):
                 xrow.append(1)
             else:
                 xrow.append(ptri[x - 1][y - 1] + ptri[x - 1][y])
-        ptri.append(row)
+        ptri.append(xrow)
     return ptri
