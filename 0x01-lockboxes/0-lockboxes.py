@@ -1,6 +1,14 @@
 #!/usr/bin/python3
 
+"""
+method that determine if all boxes can be unlocked
+"""
+
+
 def canUnlockAll(boxes):
+    """
+    check to unlock all boxes
+    """
     if not boxes or not boxes[0]:
         return False
 
