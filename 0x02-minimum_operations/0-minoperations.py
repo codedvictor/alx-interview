@@ -5,23 +5,24 @@ minimim operation function
 
 
 def minOperations(n):
+    """min operation available to n"""
     if n <= 1:
         return 0
 
     oper = 0
-    div = 2
+    next = 'H'
+    body = 'H'
 
-    while n > 1:
-        while n % div == 0:
-            oper += div
-            n //= div
-        div += 1
+    while (len(body) < n):
+        if n % len(body) == 0:
+            oper += 2
+            next = body
+            body += body
+        else:
+            oper += 1
+            body += next
+
+    if len(body) != n:
+        return 0
 
     return oper
-
-if __name__ == "__main__":
-    n = 4
-    print("Min number of operations to reach {} characters: {}".format(n, minOperations(n)))
-
-    n = 12
-    print("Min number of operations to reach {} characters: {}".format(n, minOperations(n)))
