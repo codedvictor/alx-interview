@@ -18,3 +18,10 @@ def minOperations(n):
         div += 1
 
     return oper
+
+if __name__ == "__main__":
+    n = 4
+    print("Min number of operations to reach {} characters: {}".format(n, minOperations(n)))
+
+    n = 12
+    print("Min number of operations to reach {} characters: {}".format(n, minOperations(n)))
