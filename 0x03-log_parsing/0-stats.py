@@ -6,43 +6,46 @@ a script that reads stdin line by line and computes metrics
 import sys
 
 
-def print_stdin(dic, size):
+def print_stdin(dict_std, total_size):
     """
     Print stdin information
     """
-    print("File size: {:d}".format(size))
-    for x in sorted(dic.keys()):
-        if dic[x] != 0:
-            print("{}: {:d}".format(x, dic[x]))
+    print("File size: {:d}".format(total_size))
+    for key, value in sorted(dict_std.items()):
+        if value != 0:
+            print("{}: {:d}".format(key, value))
 
-
-stdin = {"200": 0, "301": 0, "400": 0, "401": 0, "403": 0,
-       "404": 0, "405": 0, "500": 0}
 
 count = 0
-size = 0
+code = 0
+total_size = 0
+dict_std = {"200": 0,
+         "301": 0,
+         "400": 0,
+         "401": 0,
+         "403": 0,
+         "404": 0,
+         "405": 0,
+         "500": 0}
 
 try:
     for line in sys.stdin:
-        if count != 0 and count % 10 == 0:
-            print_stdin(stdin, size)
+        parsed_line = line.split()
+        parsed_line = parsed_line[::-1]
 
-        std_list = line.split()
-        count += 1
+        if len(parsed_line) > 2:
+            count += 1
 
-        try:
-            size += int(std_list[-1])
-        except:
-            pass
+            if count <= 10:
+                total_size += int(parsed_line[0])
+                code = parsed_line[1]
 
-        try:
-            if std_list[-2] in stdin:
-                stdin[std_list[-2]] += 1
-        except:
-            pass
-    print_stdin(stdin, size)
+                if (code in dict_std.keys()):
+                    dict_std[code] += 1
 
+            if (count == 10):
+                print_stdin(dict_std, total_size)
+                count = 0
 
-except KeyboardInterrupt:
-    print_stdin(stdin, size)
-    raise
+finally:
+    print_stdin(dict_std, total_size)
